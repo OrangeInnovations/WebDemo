@@ -1,4 +1,5 @@
 ﻿using Common.Entities;
+using Demo.Domain.AggregatesModels.BlogAggregate;
 using Demo.Domain.Events;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,14 @@ namespace Demo.Domain.AggregatesModels.UserAggregate
 
         public string Name  => FirstName + MiddleName + LastName;
 
+        public List<Blog> MyBlogs { get; set; }
+        public List<Post> MyPosts { get; set; }
+
         protected MyUser()
         {
+            MyBlogs = new List<Blog>();
+            MyPosts = new List<Post>();
+
             EmailVerified = false;
             CreatedTimeUtc = DateTime.UtcNow;
 
@@ -38,7 +45,7 @@ namespace Demo.Domain.AggregatesModels.UserAggregate
 
         private void AddMyUserVerifiedDomainEvent(MyUser myUser)
         {
-            MyUserVerifiedDomainEvent myUserVerifiedDomainEvent = new MyUserVerifiedDomainEvent(myUser);
+            MyUserVerifiedEmailDomainEvent myUserVerifiedDomainEvent = new MyUserVerifiedEmailDomainEvent(myUser);
             this.AddDomainEvent(myUserVerifiedDomainEvent);
         }
     }

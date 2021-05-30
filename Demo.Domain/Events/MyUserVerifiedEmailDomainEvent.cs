@@ -3,12 +3,12 @@ using MediatR;
 
 namespace Demo.Domain.Events
 {
-    public class MyUserVerifiedDomainEvent : INotification
+    public class MyUserVerifiedEmailDomainEvent : INotification
     {
         
         public MyUser MyUser { get; private set; }
 
-        public MyUserVerifiedDomainEvent(MyUser user)
+        public MyUserVerifiedEmailDomainEvent(MyUser user)
         {
             MyUser = user;
         }

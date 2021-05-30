@@ -6,10 +6,11 @@ using MediatR;
 
 using System.Threading;
 using Microsoft.Extensions.Logging;
+using Demo.Domain.Events;
 
-namespace WebApp.Application.DomainEventHandlers.MyUserVerifiedDomainEvent
+namespace WebApp.Application.DomainEventHandlers.VerifiedEmailDomainEvent
 {
-    public class SendEmailToCustomerWhenUserCreatedDomainEventHandler : INotificationHandler<Demo.Domain.Events.MyUserVerifiedDomainEvent>
+    public class SendEmailToCustomerWhenUserCreatedDomainEventHandler : INotificationHandler<MyUserVerifiedEmailDomainEvent>
     {
         private readonly ILoggerFactory logger;
 
@@ -17,10 +18,10 @@ namespace WebApp.Application.DomainEventHandlers.MyUserVerifiedDomainEvent
         {
             this.logger = logger;
         }
-        public Task Handle(Demo.Domain.Events.MyUserVerifiedDomainEvent evt, CancellationToken cancellationToken)
+        public Task Handle(MyUserVerifiedEmailDomainEvent evt, CancellationToken cancellationToken)
         {
             //send email
-            logger.CreateLogger<Demo.Domain.Events.MyUserVerifiedDomainEvent>()
+            logger.CreateLogger<MyUserVerifiedEmailDomainEvent>()
                .LogTrace($"{evt.MyUser.Name} has been successfully sent email to {evt.MyUser.EmailAddress})");
             return Task.CompletedTask;
         }
