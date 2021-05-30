@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace WebApp.Services
@@ -15,6 +17,8 @@ namespace WebApp.Services
             //    options.UseSqlServer(configuration.GetConnectionString("SampleDb")));
 
             //services.AddScoped<IDataServices, SampleDbDataServices>();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
 }

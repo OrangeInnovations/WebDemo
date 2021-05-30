@@ -4,16 +4,16 @@ using System.Text;
 
 namespace Demo.Domain.Exceptions
 {
-    public class OrderingDomainException : Exception
+    public class BlogDomainException : Exception
     {
-        public OrderingDomainException()
+        public BlogDomainException()
         { }
 
-        public OrderingDomainException(string message)
+        public BlogDomainException(string message)
             : base(message)
         { }
 
-        public OrderingDomainException(string message, Exception innerException)
+        public BlogDomainException(string message, Exception innerException)
             : base(message, innerException)
         { }
     }
