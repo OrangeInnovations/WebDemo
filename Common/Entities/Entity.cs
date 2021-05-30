@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Common.Entities
 {
-    public abstract class Entity<TId>
+    public abstract class Entity<TId>: IEntity
     {
         public virtual TId Id { get; set; }
 
