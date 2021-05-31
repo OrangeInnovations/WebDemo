@@ -11,11 +11,11 @@ namespace Demo.Domain.Infrastructure.Repositories
 {
     public class MyUserRepository : IMyUserRepository
     {
-        private readonly BlogContext _context;
+        private readonly BlogDbContext _context;
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public MyUserRepository(BlogContext blogContext)
+        public MyUserRepository(BlogDbContext blogContext)
         {
             _context = blogContext ?? throw new ArgumentNullException(nameof(blogContext));
         }

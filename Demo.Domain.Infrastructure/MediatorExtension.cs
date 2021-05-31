@@ -10,7 +10,7 @@ namespace Demo.Domain.Infrastructure
 {
     static class MediatorExtension
     {
-        public static async Task DispatchDomainEventsAsync(this IMediator mediator, BlogContext ctx)
+        public static async Task DispatchDomainEventsAsync(this IMediator mediator, BlogDbContext ctx)
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<IEntity>()

@@ -12,7 +12,7 @@ namespace Demo.Domain.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<MyUser> builder)
         {
-            builder.ToTable("myusers", BlogContext.DEFAULT_SCHEMA);
+            builder.ToTable("myusers", BlogDbContext.DEFAULT_SCHEMA);
             builder.HasKey(c => c.Id);
             builder.Ignore(b => b.DomainEvents);
             builder.Property(c => c.Id).HasMaxLength(256);

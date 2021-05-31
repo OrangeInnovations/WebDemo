@@ -12,11 +12,11 @@ namespace Demo.Domain.Infrastructure.Repositories
 {
     public class BlogRepository : IBlogRepository
     {
-        private readonly BlogContext _context;
+        private readonly BlogDbContext _context;
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public BlogRepository(BlogContext blogContext)
+        public BlogRepository(BlogDbContext blogContext)
         {
             _context = blogContext ?? throw new ArgumentNullException(nameof(blogContext));
         }

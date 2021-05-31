@@ -11,7 +11,7 @@ namespace Demo.Domain.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.ToTable("posts", BlogContext.DEFAULT_SCHEMA);
+            builder.ToTable("posts", BlogDbContext.DEFAULT_SCHEMA);
             builder.HasKey(c => c.Id);
             builder.Ignore(b => b.DomainEvents);
             builder.Property(o => o.Id)
