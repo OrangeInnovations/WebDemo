@@ -20,15 +20,15 @@ namespace WebApp.Application.Commands
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<MyUser> Handle(CreateMyUserCommand request, CancellationToken cancellationToken)
+        public async Task<MyUser> Handle(CreateMyUserCommand request, CancellationToken cancellationToken)
         {
             MyUser myUser = new MyUser(request.FirstName, request.MiddleName, request.LastName, request.EmailAddress);
 
             myUserRepository.Add(myUser);
 
+            await myUserRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-
-            throw new NotImplementedException();
+            return myUser;
         }
     }
 }

@@ -43,7 +43,6 @@ namespace Demo.Domain.Infrastructure
             // Dispatch Domain Events collection.
             await _mediator.DispatchDomainEventsAsync(this);
 
-
             // After executing this line all the changes(from the Command Handler and Domain Event Handlers)
             // performed through the DbContext will be committed
 
