@@ -17,14 +17,17 @@ namespace Demo.Domain.Infrastructure
                 .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
 
             var domainEvents = domainEntities
-                .SelectMany(x => x.Entity.DomainEvents)
+                .SelectMany(c => c.Entity.DomainEvents)
                 .ToList();
 
             domainEntities.ToList()
                 .ForEach(entity => entity.Entity.ClearDomainEvents());
 
             foreach (var domainEvent in domainEvents)
+            {
                 await mediator.Publish(domainEvent);
+            }
+                
         }
     }
 }

@@ -22,13 +22,23 @@ namespace Demo.Domain.AggregatesModels.BlogAggregate
         {
             Posts = new List<Post>();
             Rating = 0;
+            CreatedTimeUtc = DateTime.UtcNow;
         }
 
 
-        public Blog(string ownerId, string url, int rating)
+        public Blog(string ownerId, string url, int rating):this()
         {
+            OwnerId = ownerId;
+            Url = url;
+            Rating = rating;
 
+            AddCreateBlogDomainEvent(this);
         }
-        
+
+        private void AddCreateBlogDomainEvent(Blog blog)
+        {
+            ValidateUserExistDomainEvent validateUserExistDomainEvent = new ValidateUserExistDomainEvent(blog.OwnerId);
+            this.AddDomainEvent(validateUserExistDomainEvent);
+        }
     }
 }
