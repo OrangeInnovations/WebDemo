@@ -10,10 +10,5 @@ namespace WebApp
         public bool UseCustomizationData { get; set; }
 
         public string ConnectionString { get; set; }
-
-
-        public int GracePeriodTime { get; set; }
-
-        public int CheckUpdateTime { get; set; }
     }
 }
