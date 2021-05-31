@@ -18,7 +18,7 @@ namespace WebApp.Services
 
             //services.AddScoped<IDataServices, SampleDbDataServices>();
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            //services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
 }

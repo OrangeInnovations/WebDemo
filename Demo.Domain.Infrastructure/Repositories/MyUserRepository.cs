@@ -3,7 +3,6 @@ using Demo.Domain.AggregatesModels.UserAggregate;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -38,6 +37,11 @@ namespace Demo.Domain.Infrastructure.Repositories
         public void Update(MyUser myUser)
         {
             _context.Entry(myUser).State = EntityState.Modified;
+        }
+
+        public async Task<List<MyUser>> GetAllAsync()
+        {
+            return await _context.MyUsers.ToListAsync();
         }
     }
 }

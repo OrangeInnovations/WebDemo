@@ -12,5 +12,7 @@ namespace Demo.Domain.AggregatesModels.UserAggregate
         void Update(MyUser myUser);
 
         Task<MyUser> GetAsync(string myUserId);
+
+        Task<List<MyUser>> GetAllAsync();
     }
 }

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Demo.Domain.AggregatesModels.UserAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Application.ViewModels;
 
 namespace WebApp.Services
 {
@@ -15,17 +17,16 @@ namespace WebApp.Services
 
         private void CreateMappings()
         {
-            CreateSampleDbModelsMappings();
+            CreateMyUserMappings();
 
 
         }
 
-        private void CreateSampleDbModelsMappings()
+        private void CreateMyUserMappings()
         {
-            //CreateMap<CustomerMaster, CustomerMasterVm>();
+            CreateMap<MyUser, MyUserVM>();
 
-            //CreateMap<FrequencyMaster, FrequencyMasterVm>();
-            //CreateMap<UsecaseMaster, UsecaseMasterVm>();
+            
         }
     }
 }
