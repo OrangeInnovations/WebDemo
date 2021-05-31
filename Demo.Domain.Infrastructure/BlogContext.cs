@@ -1,6 +1,7 @@
 ﻿using Common.Entities;
 using Demo.Domain.AggregatesModels.BlogAggregate;
 using Demo.Domain.AggregatesModels.UserAggregate;
+using Demo.Domain.Infrastructure.EntityConfigurations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,12 +33,23 @@ namespace Demo.Domain.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.ApplyConfiguration(new BlogEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PostEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MyUserEntityTypeConfiguration());
         }
 
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+        public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            // Dispatch Domain Events collection.
+            await _mediator.DispatchDomainEventsAsync(this);
+
+
+            // After executing this line all the changes(from the Command Handler and Domain Event Handlers)
+            // performed through the DbContext will be committed
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            return true;
         }
     }
 }
