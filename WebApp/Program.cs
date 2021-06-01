@@ -77,16 +77,7 @@ namespace WebApp
         private static IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .CaptureStartupErrors(false)
-                .ConfigureKestrel(options =>
-                {
-                    var ports = GetDefinedPorts(configuration);
-                    options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
-                    {
-                        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-                    });
-
-                })
-                //.ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
+                
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
@@ -107,12 +98,6 @@ namespace WebApp
                 .UseNLog()
                 .Build();
 
-        private static (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
-        {
-            var grpcPort = config.GetValue("GRPC_PORT", 5001);
-            var port = config.GetValue("PORT", 80);
-            return (port, grpcPort);
-        }
 
         private static IConfiguration GetConfiguration()
         {
