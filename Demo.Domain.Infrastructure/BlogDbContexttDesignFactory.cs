@@ -14,7 +14,7 @@ namespace Demo.Domain.Infrastructure
         public BlogDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BlogDbContext>()
-                .UseSqlServer("Server=.;Initial Catalog=Microsoft.eShopOnContainers.Services.OrderingDb;Integrated Security=true");
+                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogDB;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             return new BlogDbContext(optionsBuilder.Options, new NoMediator());
         }
