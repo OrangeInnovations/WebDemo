@@ -3,3 +3,4 @@ Steps
    dotnet tool install --global dotnet-ef
 2. EF migration
    dotnet ef database update
+3. Run WebApp
