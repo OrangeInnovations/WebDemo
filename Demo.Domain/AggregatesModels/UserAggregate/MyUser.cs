@@ -25,6 +25,8 @@ namespace Demo.Domain.AggregatesModels.UserAggregate
 
         protected MyUser()
         {
+            Id = Guid.NewGuid().ToString();
+
             MyBlogs = new List<Blog>();
             MyPosts = new List<Post>();
 
