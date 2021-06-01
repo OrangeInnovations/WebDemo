@@ -13,72 +13,93 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using WebApp.Services;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using WebApp.Infrastructure.AutofacModules;
 
 namespace WebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(cfg =>
-            {
-                cfg.AddPolicy("AnyOperation", bldr =>
-                {
-                    bldr.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowAnyOrigin();
-                });
-
-                cfg.AddPolicy("AnyGET", bldr =>
-                {
-                    bldr.AllowAnyHeader()
-                        .WithMethods("GET")
-                        .AllowAnyOrigin();
-                });
-            });
+            services
+            .AddApplicationInsights(Configuration)
+            .AddCustomMvc()
+            .AddCustomDbContext(Configuration)
+            .AddCustomSwagger(Configuration)
+            .AddCustomIntegrations(Configuration)
+            .AddCustomConfiguration(Configuration);
+            //.AddCustomAuthentication(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.RegisterServices(Configuration);
+            services.AddOtherServices(Configuration);
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });
-            });
+
+            //configure autofac
+            var container = new ContainerBuilder();
+            container.Populate(services);
+
+            container.RegisterModule(new MediatorModule());
+            container.RegisterModule(new ApplicationModule());
+
+            return new AutofacServiceProvider(container.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             //loggerFactory.AddAzureWebAppDiagnostics();
-            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
+            //loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
+
+            var pathBase = Configuration["PATH_BASE"];
+            if (!string.IsNullOrEmpty(pathBase))
+            {
+                loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
+                app.UsePathBase(pathBase);
+            }
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApp v1"));
             }
+
+            app.UseSwagger()
+               .UseSwaggerUI(c =>
+               {
+                   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Ordering.API V1");
+                   //c.OAuthClientId("bloggingswaggerui");
+                   //c.OAuthAppName("Blogging Swagger UI");
+               });
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
+            ConfigureAuth(app);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
+            app.UseAuthorization();
         }
     }
 }
