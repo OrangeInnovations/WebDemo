@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,6 +43,13 @@ namespace Demo.Domain.Infrastructure
             modelBuilder.ApplyConfiguration(new BlogEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PostEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MyUserEntityTypeConfiguration());
+
+            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
+
+            //base.OnModelCreating(modelBuilder);
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)

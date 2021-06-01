@@ -28,8 +28,8 @@ namespace Demo.Domain.Infrastructure.EntityConfigurations
 
             builder.Property(b => b.CreatedTimeUtc).IsRequired();
 
-            builder.HasMany(b => b.MyBlogs).WithOne().HasForeignKey(a => a.OwnerId);
-            builder.HasMany(b => b.MyPosts).WithOne().HasForeignKey(a => a.PosterId);
+            builder.HasMany(b => b.MyBlogs).WithOne().HasForeignKey(a => a.OwnerId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(b => b.MyPosts).WithOne().HasForeignKey(a => a.PosterId).OnDelete(DeleteBehavior.Restrict);
            
         }
     }
