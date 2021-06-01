@@ -23,23 +23,32 @@ namespace WebApp.Infrastructure
 
             await policy.ExecuteAsync(async () =>
             {
-                var useCustomizationData = settings.Value.UseCustomizationData;
-
-                var contentRootPath = env.ContentRootPath;
-
-                using (context)
+                try
                 {
-                    context.Database.Migrate();
+                    var useCustomizationData = settings.Value.UseCustomizationData;
 
-                    if (useCustomizationData && !context.MyUsers.Any())
+                    var contentRootPath = env.ContentRootPath;
+
+                    using (context)
                     {
-                        context.MyUsers.AddRange( ReadUsersFromFile(contentRootPath, logger) );
+                        context.Database.Migrate();
+
+                        if (useCustomizationData && !context.MyUsers.Any())
+                        {
+                            context.MyUsers.AddRange(ReadUsersFromFile(contentRootPath, logger));
+
+                            await context.SaveChangesAsync();
+                        }
 
                         await context.SaveChangesAsync();
                     }
-
-                    await context.SaveChangesAsync();
                 }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
+                    throw;
+                }
+                
             });
         }
 
