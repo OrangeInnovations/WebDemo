@@ -55,7 +55,25 @@ namespace Demo.UnitTests.Application
             Assert.Equal(result.StatusCode, (int)System.Net.HttpStatusCode.OK);
             Assert.Equal(result.Value, mocMyUserVM.Object);
 
+        }
 
+        [Fact]
+        public async Task GetAllUsers_success()
+        {
+            //Arrange
+            var mockMyUsers = new Mock<List<MyUser>>();
+            var mocMyUserVMs = new Mock<List<MyUserVM>>();
+            myUserRepositoryMock.Setup(x => x.GetAllAsync()).Returns(Task.FromResult(mockMyUsers.Object));
+            mapperMock.Setup(x => x.Map<List<MyUserVM>>(mockMyUsers.Object)).Returns(mocMyUserVMs.Object);
+
+            //Act
+            var myUserController = new MyUserController(mediatorMock.Object, mapperMock.Object, myUserRepositoryMock.Object, loggerMock.Object);
+            ActionResult actionResult = await myUserController.GetAllUsers();
+
+            //Assert
+            var result= actionResult as OkObjectResult;
+            Assert.Equal(result.StatusCode, (int)System.Net.HttpStatusCode.OK);
+            Assert.Equal(result.Value, mocMyUserVMs.Object);
         }
     }
 }
