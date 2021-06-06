@@ -40,6 +40,9 @@ namespace WebApp.Controllers
         {
             var myusers = await myUserRepository.GetAllAsync();
             var list = mapper.Map<List<MyUserVM>>(myusers);
+
+            logger.LogInformation($"get all users {list}");
+
             return Ok(list);
         }
 

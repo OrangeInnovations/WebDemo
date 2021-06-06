@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp.Controllers
+namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -27,6 +28,8 @@ namespace WebApp.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             _logger.LogInformation("get WeatherForecast info");
+
+            _logger.LogDebug("get WeatherForecast info in debug");
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
