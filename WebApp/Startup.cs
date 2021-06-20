@@ -83,7 +83,7 @@ namespace WebApp
             app.UseSwagger()
                .UseSwaggerUI(c =>
                {
-                   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Ordering.API V1");
+                   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Blogging.API V1");
                    //c.OAuthClientId("bloggingswaggerui");
                    //c.OAuthAppName("Blogging Swagger UI");
                });
