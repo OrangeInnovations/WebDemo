@@ -70,7 +70,7 @@ namespace WebApi.Infrastructure
         {
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
+                //options.DescribeAllEnumsAsStrings();
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "WebApp - HTTP API",
