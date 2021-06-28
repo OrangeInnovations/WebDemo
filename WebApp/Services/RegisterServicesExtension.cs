@@ -12,6 +12,8 @@ using WebApp.Infrastructure.Filters;
 using System.IdentityModel.Tokens.Jwt;
 using Okta.AspNetCore;
 using System.IO;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApp.Services
 {
@@ -153,6 +155,24 @@ namespace WebApp.Services
                 options.Authority = oktaConfig.Issuer;//configuration.GetValue<string>("Okta:Issuer"); ;
                 options.RequireHttpsMetadata = false;
                 options.Audience = oktaConfig.ClientId;
+            }).AddOpenIdConnect(options =>
+            {
+                //options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.Authority = oktaConfig.Domain + "/oauth2/default";
+                options.RequireHttpsMetadata = true;
+                options.ClientId = oktaConfig.ClientId ;
+                options.ClientSecret = oktaConfig.ClientSecret;
+                options.ResponseType = OpenIdConnectResponseType.Code;
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.SaveTokens = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "groups",
+                    ValidateIssuer = true
+                };
             });
 
             //services.AddAuthentication(options =>
