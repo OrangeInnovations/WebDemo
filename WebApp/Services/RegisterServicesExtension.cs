@@ -10,6 +10,8 @@ using System.Reflection;
 using WebApp.Controllers;
 using WebApp.Infrastructure.Filters;
 using System.IdentityModel.Tokens.Jwt;
+using Okta.AspNetCore;
+using System.IO;
 
 namespace WebApp.Services
 {
@@ -23,6 +25,7 @@ namespace WebApp.Services
             return services;
         }
 
+        
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             // Add framework services.
@@ -71,14 +74,30 @@ namespace WebApp.Services
             services.AddSwaggerGen(options =>
             {
                 //options.DescribeAllEnumsAsStrings();
+
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "WebApp - HTTP API",
                     Version = "v1",
-                    Description = "The Blogging Service HTTP API"
+                    Title = "Web API",
+                    Description = "The Blogging Service HTTP API",
+                    //TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "David Chen",
+                        Email = string.Empty,
+                        
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Use under David",
+                       // Url = new Uri("https://example.com/license"),
+                    }
                 });
-                
 
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
 
             return services;
@@ -116,12 +135,13 @@ namespace WebApp.Services
             return services;
         }
 
-        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration, OktaConfig oktaConfig)
         {
             // prevent from mapping "sub" claim to nameidentifier.
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
-            var identityUrl = configuration.GetValue<string>("IdentityUrl");
+            //var identityUrl = configuration.GetValue<string>("IdentityUrl");
+            
 
             services.AddAuthentication(options =>
             {
@@ -130,14 +150,32 @@ namespace WebApp.Services
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = identityUrl;
+                options.Authority = oktaConfig.Issuer;//configuration.GetValue<string>("Okta:Issuer"); ;
                 options.RequireHttpsMetadata = false;
-                options.Audience = "blogs";
+                options.Audience = oktaConfig.ClientId;
             });
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+            //    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+            //    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+            //})
+            //.AddOktaWebApi(new OktaWebApiOptions()
+            //{
+            //    OktaDomain = configuration["Okta:Domain"],
+            //});
 
             return services;
         }
 
+        public static IServiceCollection AddCustomAuthorization(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthorization();
+
+
+            return services;
+        }
         public static IServiceCollection AddOtherServices(this IServiceCollection services, IConfiguration configuration)
         {
 

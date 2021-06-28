@@ -36,14 +36,17 @@ namespace WebApp
         {
             _logger.LogInformation("start ConfigureServices");
 
+            OktaConfig oktaConfig = AddOktaConfig(services, Configuration);
+
             services
             .AddApplicationInsights(Configuration)
             .AddCustomMvc()
             .AddCustomDbContext(Configuration)
             .AddCustomSwagger(Configuration)
             .AddCustomIntegrations(Configuration)
-            .AddCustomConfiguration(Configuration);
-            //.AddCustomAuthentication(Configuration);
+            .AddCustomConfiguration(Configuration)
+            .AddCustomAuthentication(Configuration, oktaConfig)
+            .AddCustomAuthorization(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -104,6 +107,29 @@ namespace WebApp
         {
             app.UseAuthentication();
             app.UseAuthorization();
+        }
+
+        private static OktaConfig AddOktaConfig(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+
+            services.Configure<OktaConfig>(configuration.GetSection("Okta"));
+
+            services.AddSingleton<IConfiguration>(configuration);
+
+
+            IConfigurationSection section = configuration.GetSection("Okta");
+
+
+            OktaConfig settings = new OktaConfig();
+
+            section.Bind(settings);
+
+
+            // then we register the instance into the services collection
+            services.AddSingleton(settings);
+
+            return settings;
         }
     }
 }

@@ -32,7 +32,10 @@ namespace WebApp.Controllers
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns></returns>
         [Route("all")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<MyUserVM>), (int)HttpStatusCode.OK)]
@@ -47,7 +50,23 @@ namespace WebApp.Controllers
         }
 
 
-        // POST api/<MyUserController>
+        /// <summary>
+        /// Create a user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST 
+        ///     {
+        ///        "FirstName": "sam",
+        ///        "MiddleName": "delta",
+        ///        "LastName": "Smith",
+        ///        "EmailAddress": "abc@hotmail.com"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="createMyUserCommand"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(MyUserVM), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<MyUserVM>> CreateMyUserAsync([FromBody] CreateMyUserCommand createMyUserCommand)
