@@ -173,6 +173,13 @@ namespace WebApp.Services
                     RoleClaimType = "groups",
                     ValidateIssuer = true
                 };
+            }).AddOktaWebApi(new OktaWebApiOptions()
+            {
+                OktaDomain = oktaConfig.Domain,
+                //AuthorizationServerId = "default",
+                Audience = oktaConfig.ClientId,
+                //ClientId=oktaConfig.ClientId,
+
             });
 
             //services.AddAuthentication(options =>
