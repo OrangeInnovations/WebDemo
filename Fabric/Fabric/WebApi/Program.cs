@@ -1,10 +1,12 @@
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Configuration;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Serilog;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.Datadog.Logs;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,6 +29,11 @@ namespace WebApi
                 var AzureStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=serilogblobloggingname;AccountKey=blablablakey;EndpointSuffix=core.windows.net";
 
                 //https://docs.datadoghq.com/logs/log_collection/csharp/?tab=serilog
+
+                IConfigurationRoot config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false)
+                    .Build();
 
 
                 Log.Logger = new LoggerConfiguration()
@@ -54,6 +61,26 @@ namespace WebApi
                 ServiceEventSource.Current.ServiceHostInitializationFailed(e.ToString());
                 throw;
             }
+        }
+
+        private static IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            var config = builder.Build();
+
+            if (config.GetValue<bool>("UseVault", false))
+            {
+                builder.AddAzureKeyVault(
+                    $"https://{config["Vault:Name"]}.vault.azure.net/",
+                    config["Vault:ClientId"],
+                    config["Vault:ClientSecret"]);
+            }
+
+            return builder.Build();
         }
     }
 }
