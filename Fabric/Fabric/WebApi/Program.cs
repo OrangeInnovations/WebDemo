@@ -1,6 +1,8 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Serilog;
 using Serilog.Formatting.Compact;
+using Serilog.Sinks.Datadog.Logs;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -21,10 +23,22 @@ namespace WebApi
                 // Registering a service maps a service type name to a .NET type.
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
+
+                var AzureStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=serilogblobloggingname;AccountKey=blablablakey;EndpointSuffix=core.windows.net";
+
+                //https://docs.datadoghq.com/logs/log_collection/csharp/?tab=serilog
+
+
                 Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Console(new RenderedCompactJsonFormatter()).WriteTo.Debug(outputTemplate: DateTime.Now.ToString())
-                .WriteTo.File("c:\\Logs\\log.txt", rollingInterval: RollingInterval.Day)
+
+                //.WriteTo.AzureBlobStorage(AzureStorageConnectionString) //sink log to AzureBlobStorage
+                //.WriteTo.DatadogLogs("<API_KEY>", configuration: new DatadogConfiguration { Url = "https://http-intake.logs.datadoghq.com" })//sink log to DatadogLogs
+
+                //.WriteTo.ApplicationInsights(new TelemetryConfiguration { InstrumentationKey = "xxxxxxxxx" }, TelemetryConverter.Traces) //sink log to application insight
+
+                .WriteTo.File("c:\\Logs\\log.txt", rollingInterval: RollingInterval.Day)//sink to file
                 .CreateLogger();
 
                 ServiceRuntime.RegisterServiceAsync("WebApiType",
