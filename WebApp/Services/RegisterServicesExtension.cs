@@ -14,6 +14,7 @@ using Okta.AspNetCore;
 using System.IO;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApp.Services
 {
@@ -137,26 +138,38 @@ namespace WebApp.Services
             return services;
         }
 
-        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration, OktaConfig oktaConfig)
+        public static IServiceCollection AddCustomOktaAuthentication(this IServiceCollection services, IConfiguration configuration, OktaConfig oktaConfig)
         {
             // prevent from mapping "sub" claim to nameidentifier.
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
-            //var identityUrl = configuration.GetValue<string>("IdentityUrl");
 
-
-            services.AddAuthentication(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+                options.Authority = oktaConfig.IssuerURI;// "https://dev-21067104.okta.com/oauth2/default";
+                options.Audience = oktaConfig.Audience;// "api://default";
 
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = oktaConfig.Issuer;//configuration.GetValue<string>("Okta:Issuer"); ;
-                options.RequireHttpsMetadata = false;
-                options.Audience = oktaConfig.ClientId;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "groups"
+                };
             });
+
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.Authority = oktaConfig.Issuer;//configuration.GetValue<string>("Okta:Issuer"); ;
+            //    options.RequireHttpsMetadata = false;
+            //    options.Audience = oktaConfig.ClientId;
+            //});
             //.AddOpenIdConnect(options =>
             //{
             //    //options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;

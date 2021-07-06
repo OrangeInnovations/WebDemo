@@ -14,3 +14,10 @@ Steps
    4d. With the SqlLocalDB.exe command line share your connection issuing this command:
 		sqllocaldb stop MSSQLLocalDB
 		sqllocaldb start MSSQLLocalDB
+
+
+Okta Backend Authentication and Authorization Steps:
+1. Okta Security=>API trust origin settings
+2. Okta Security=>API=>Default Authorization claim settings as the following: 
+	a) Add ID token claim (name: groups; Include in token type: ID Token; Value type: Groups; Filter: Matchs Regex, .*; Include In: Any scope );
+	b) Add accept token cliam (name: groups; Include in token type: Access Token; Value type: Groups; Filter: Matchs Regex, .*; Include In: Any scope );

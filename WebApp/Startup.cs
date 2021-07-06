@@ -45,7 +45,7 @@ namespace WebApp
             .AddCustomSwagger(Configuration)
             .AddCustomIntegrations(Configuration)
             .AddCustomConfiguration(Configuration)
-            .AddCustomAuthentication(Configuration, oktaConfig)
+            .AddCustomOktaAuthentication(Configuration, oktaConfig)
             .AddCustomAuthorization(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
