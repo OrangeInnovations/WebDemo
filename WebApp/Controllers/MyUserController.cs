@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Demo.Domain.AggregatesModels.UserAggregate;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -68,6 +69,7 @@ namespace WebApp.Controllers
         /// <param name="createMyUserCommand"></param>
         /// <returns></returns>
         [HttpPost]
+       // [Authorize(Roles = "OperationGroup,AdminGroup")]
         [ProducesResponseType(typeof(MyUserVM), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<MyUserVM>> CreateMyUserAsync([FromBody] CreateMyUserCommand createMyUserCommand)
         {

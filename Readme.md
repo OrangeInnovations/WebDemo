@@ -21,3 +21,5 @@ Okta Backend Authentication and Authorization Steps:
 2. Okta Security=>API=>Default Authorization claim settings as the following: 
 	a) Add ID token claim (name: groups; Include in token type: ID Token; Value type: Groups; Filter: Matchs Regex, .*; Include In: Any scope );
 	b) Add accept token cliam (name: groups; Include in token type: Access Token; Value type: Groups; Filter: Matchs Regex, .*; Include In: Any scope );
+
+	https://github.com/oktadev/okta-angular-aspnetcore-example
