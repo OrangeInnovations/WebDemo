@@ -141,8 +141,6 @@ namespace WebApp.Services
         public static IServiceCollection AddCustomOktaAuthentication(this IServiceCollection services, IConfiguration configuration, OktaConfig oktaConfig)
         {
             // prevent from mapping "sub" claim to nameidentifier.
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
-
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -156,57 +154,6 @@ namespace WebApp.Services
                     RoleClaimType = "groups"
                 };
             });
-
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
-
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.Authority = oktaConfig.Issuer;//configuration.GetValue<string>("Okta:Issuer"); ;
-            //    options.RequireHttpsMetadata = false;
-            //    options.Audience = oktaConfig.ClientId;
-            //});
-            //.AddOpenIdConnect(options =>
-            //{
-            //    //options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    options.Authority = oktaConfig.Domain + "/oauth2/default";
-            //    options.RequireHttpsMetadata = true;
-            //    options.ClientId = oktaConfig.ClientId ;
-            //    options.ClientSecret = oktaConfig.ClientSecret;
-            //    options.ResponseType = OpenIdConnectResponseType.Code;
-            //    options.GetClaimsFromUserInfoEndpoint = true;
-            //    options.Scope.Add("openid");
-            //    options.Scope.Add("profile");
-            //    options.SaveTokens = true;
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        NameClaimType = "name",
-            //        RoleClaimType = "groups",
-            //        ValidateIssuer = true
-            //    };
-            //}).AddOktaWebApi(new OktaWebApiOptions()
-            //{
-            //    OktaDomain = oktaConfig.Domain,
-            //    //AuthorizationServerId = "default",
-            //    Audience = oktaConfig.ClientId,
-            //    //ClientId=oktaConfig.ClientId,
-
-            //});
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-            //    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-            //    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-            //})
-            //.AddOktaWebApi(new OktaWebApiOptions()
-            //{
-            //    OktaDomain = configuration["Okta:Domain"],
-            //});
 
             return services;
         }
