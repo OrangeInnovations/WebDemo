@@ -42,56 +42,22 @@ namespace WebApi
                     new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
                     {
                         var webHost = BuildWebHost( serviceContext,  url,  listener);
-                        
 
-                    webHost.MigrateDbContext<BlogDbContext>((context, serviceProvider) =>
-                    {
-                        var env = serviceProvider.GetService<IWebHostEnvironment>();
-                        var settings = serviceProvider.GetService<IOptions<BlogingSettings>>();
-                        var logger = serviceProvider.GetService<ILogger<BlogDbContextSeed>>();
 
-                        new BlogDbContextSeed()
-                            .SeedAsync(context, env, settings, logger)
-                            .Wait();
-                    });
+                        webHost.MigrateDbContext<BlogDbContext>((context, serviceProvider) =>
+                        {
+                            var env = serviceProvider.GetService<IWebHostEnvironment>();
+                            var settings = serviceProvider.GetService<IOptions<BlogingSettings>>();
+                            var logger = serviceProvider.GetService<ILogger<BlogDbContextSeed>>();
+
+                            new BlogDbContextSeed()
+                                .SeedAsync(context, env, settings, logger)
+                                .Wait();
+                        });
 
 
                         return webHost;
 
-                        //ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
-
-                        //return new WebHostBuilder() 
-                        //            .UseKestrel(opt =>
-                        //            {
-                        //                int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
-                        //                opt.Listen(IPAddress.IPv6Any, port, listenOptions =>
-                        //                {
-                        //                    listenOptions.UseHttps(GetCertificateFromStore());
-                        //                });
-                        //            })
-                        //            .ConfigureServices(
-                        //                services => services
-                        //                    .AddSingleton<StatelessServiceContext>(serviceContext))
-                        //            .UseContentRoot(Directory.GetCurrentDirectory())
-                        //            .ConfigureAppConfiguration((hostingContext, config) =>
-                        //            {
-                        //                var env = hostingContext.HostingEnvironment;
-                        //                config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        //                      .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
-                        //                          optional: true, reloadOnChange: true);
-                        //                config.AddEnvironmentVariables();
-                        //            })
-                        //             .ConfigureLogging((loggingBuilder) =>
-                        //            {
-                        //                //loggingBuilder.AddApplicationInsights("");
-                        //                loggingBuilder.AddConsole();
-                        //                loggingBuilder.AddDebug();
-                        //            })
-                        //            .UseStartup<Startup>()
-                        //            .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
-                        //            .UseUrls(url)
-                        //            .UseSerilog()
-                        //            .Build();
                     }))
             };
         }
@@ -100,7 +66,7 @@ namespace WebApi
         {
             ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
-            var webHost= new WebHostBuilder()
+            var webHost = new WebHostBuilder()
                                     .UseKestrel(opt =>
                                     {
                                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
@@ -121,7 +87,7 @@ namespace WebApi
                                                   optional: true, reloadOnChange: true);
                                         config.AddEnvironmentVariables();
                                     })
-                                     .ConfigureLogging((hostingContext,loggingBuilder) =>
+                                     .ConfigureLogging((hostingContext, loggingBuilder) =>
                                      {
                                          //loggingBuilder.AddApplicationInsights("");
                                          loggingBuilder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
