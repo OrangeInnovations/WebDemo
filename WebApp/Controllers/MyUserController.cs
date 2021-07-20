@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,9 @@ namespace WebApp.Controllers
             var myusers = await myUserRepository.GetAllAsync();
             var list = mapper.Map<List<MyUserVM>>(myusers);
 
-            logger.LogInformation($"get all users {list}");
+            var listJson = JsonConvert.SerializeObject(list);
+
+            logger.LogInformation($"get all users {listJson}");
 
             return Ok(list);
         }
