@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Common.Entities
 {
     public abstract class Entity<TId>: IEntity
     {
+        [JsonProperty("id")]
         public virtual TId Id { get; set; }
 
         public bool IsTransient()
