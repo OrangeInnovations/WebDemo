@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.ServiceFabric.Services.Runtime;
@@ -75,9 +76,8 @@ namespace WebApi
             if (config.GetValue<bool>("UseVault", false))
             {
                 builder.AddAzureKeyVault(
-                    $"https://{config["Vault:Name"]}.vault.azure.net/",
-                    config["Vault:ClientId"],
-                    config["Vault:ClientSecret"]);
+                     new Uri($"https://{config["Vault:Name"]}.vault.azure.net/"),
+                     new ClientSecretCredential(config["Vault:TenantId"], config["Vault:ClientId"], config["Vault:ClientSecret"]));
             }
 
             return builder.Build();
