@@ -1,6 +1,10 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
+using Demo.Domain.AggregatesModels.UserAggregate;
+using Demo.Domain.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -17,11 +21,27 @@ namespace FunctionApp
     {
         private readonly ILogger<UserFunction> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IMapper mapper;
+        private readonly IMyUserRepository myUserRepository;
 
-        public UserFunction(ILogger<UserFunction> log, IConfiguration configuration)
+        public UserFunction(ILogger<UserFunction> log, IConfiguration configuration, IMapper mapper, IMyUserRepository myUserRepository)
         { 
             _logger = log;
             _configuration = configuration;
+            this.mapper = mapper;
+            this.myUserRepository = myUserRepository;
+        }
+
+        [FunctionName("AllUsers")]
+        [OpenApiOperation(operationId: "AllUsers", tags: new[] { "AllUsers" })]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: " application/json", bodyType: typeof(List<MyUserVM>), Description = "The OK response")]
+        public async Task<IActionResult> GetAllUsers(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req)
+        {
+            var myusers = await myUserRepository.GetAllAsync();
+            var list = mapper.Map<List<MyUserVM>>(myusers);
+
+            return new OkObjectResult(list);
         }
 
         [FunctionName("Test")]

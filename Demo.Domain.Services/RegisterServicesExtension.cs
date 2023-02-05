@@ -27,11 +27,11 @@ namespace Demo.Domain.Services
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<ServiceFactory>(context =>
-            {
-                var componentContext = context.GetRequiredService<IComponentContext>();
-                return t => { object o; return componentContext.TryResolve(t, out o) ? o : null; };
-            });
+            //services.AddScoped<ServiceFactory>(context =>
+            //{
+            //    var componentContext = context.GetRequiredService<IComponentContext>();
+            //    return t => { object o; return componentContext.TryResolve(t, out o) ? o : null; };
+            //});
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
