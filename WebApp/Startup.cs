@@ -9,6 +9,7 @@ using WebApp.Services;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Demo.Domain.Services.AutofacModules;
+using Demo.Domain.Services;
 
 namespace WebApp
 {
@@ -41,7 +42,8 @@ namespace WebApp
             .AddCustomOktaAuthentication(Configuration, oktaConfig)
             .AddCustomAuthorization(Configuration);
 
-            services.AddAutoMapper(typeof(Startup));
+            
+            services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddOtherServices(Configuration);
 
