@@ -1,6 +1,4 @@
-using Azure;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Xunit.Abstractions;
 using Xunit.DependencyInjection;
 
