@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebApp.Application.DomainEventHandlers.ValidateUserExistDomainEvents
+namespace Demo.Domain.Services.DomainEventHandlers.ValidateUserExistDomainEvents
 {
     public class ValidateUserExistDomainEventHandler : INotificationHandler<ValidateUserExistDomainEvent>
     {

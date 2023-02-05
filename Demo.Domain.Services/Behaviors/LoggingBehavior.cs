@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Common.Extensions;
 
-namespace WebApp.Application.Behaviors
+namespace Demo.Domain.Services.Behaviors
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {

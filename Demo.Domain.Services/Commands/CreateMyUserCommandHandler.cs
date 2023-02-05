@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebApp.Application.Commands
+namespace Demo.Domain.Services.Commands
 {
     public class CreateMyUserCommandHandler : IRequestHandler<CreateMyUserCommand, MyUser>
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp.Infrastructure.AutofacModules
+namespace Demo.Domain.Services.AutofacModules
 {
     public class ApplicationModule : Autofac.Module
     {

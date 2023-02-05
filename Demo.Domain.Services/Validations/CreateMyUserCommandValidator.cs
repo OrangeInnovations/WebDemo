@@ -1,12 +1,8 @@
-﻿using FluentValidation;
+﻿using Demo.Domain.Services.Commands;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApp.Application.Commands;
 
-namespace WebApp.Application.Validations
+namespace Demo.Domain.Services.Validations
 {
     public class CreateMyUserCommandValidator: AbstractValidator<CreateMyUserCommand>
     {

@@ -1,17 +1,13 @@
 ﻿using Autofac;
+using Demo.Domain.Services.Behaviors;
+using Demo.Domain.Services.Commands;
+using Demo.Domain.Services.DomainEventHandlers.ValidateUserExistDomainEvents;
+using Demo.Domain.Services.Validations;
 using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using WebApp.Application.Behaviors;
-using WebApp.Application.Commands;
-using WebApp.Application.DomainEventHandlers.ValidateUserExistDomainEvents;
-using WebApp.Application.Validations;
 
-namespace WebApp.Infrastructure.AutofacModules
+namespace Demo.Domain.Services.AutofacModules
 {
     public class MediatorModule : Autofac.Module
     {

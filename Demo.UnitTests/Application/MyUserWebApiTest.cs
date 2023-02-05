@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Demo.Domain.AggregatesModels.UserAggregate;
+using Demo.Domain.Services.Commands;
+using Demo.Domain.Services.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using WebApp.Application.Commands;
-using WebApp.Application.ViewModels;
 using WebApp.Controllers;
 using Xunit;
 

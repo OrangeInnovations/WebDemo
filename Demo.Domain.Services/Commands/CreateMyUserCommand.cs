@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp.Application.Commands
+namespace Demo.Domain.Services.Commands
 {
 
     public class CreateMyUserCommand: IRequest<MyUser>

@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using Demo.Domain.AggregatesModels.UserAggregate;
+using Demo.Domain.Services.Commands;
+using Demo.Domain.Services.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using WebApp.Application.Commands;
-using WebApp.Application.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

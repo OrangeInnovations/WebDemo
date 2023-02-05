@@ -8,7 +8,7 @@ using System.Threading;
 using Microsoft.Extensions.Logging;
 using Demo.Domain.Events;
 
-namespace WebApp.Application.DomainEventHandlers.VerifiedEmailDomainEvent
+namespace Demo.Domain.Services.DomainEventHandlers.VerifiedEmailDomainEvent
 {
     public class SendEmailToCustomerWhenUserCreatedDomainEventHandler : INotificationHandler<MyUserVerifiedEmailDomainEvent>
     {
