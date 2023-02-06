@@ -9,11 +9,11 @@ using Xunit.Abstractions;
 
 namespace WebApi.Test.Controllers
 {
-    public class WeatherForecastTest: IClassFixture<TestClassFixture>
+    public class WeatherForecastTest: IClassFixture<ApiTestClassFixture>
     {
         private readonly ITestOutputHelper _output;
-        private readonly TestClassFixture _fixture;
-        public WeatherForecastTest(TestClassFixture fixture, ITestOutputHelper output)
+        private readonly ApiTestClassFixture _fixture;
+        public WeatherForecastTest(ApiTestClassFixture fixture, ITestOutputHelper output)
         {
             _fixture = fixture;
             _output = output;

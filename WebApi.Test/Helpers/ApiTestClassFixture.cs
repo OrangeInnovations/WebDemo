@@ -6,12 +6,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Test.Helpers
 {
-    public class TestClassFixture : IDisposable
+    public class ApiTestClassFixture : IDisposable
     {
         
         public TestServer Server { get; set; }
         public HttpClient Client { get; set; }
-        public TestClassFixture()
+        public ApiTestClassFixture()
         {
             var webHostBuilder = WebHost.CreateDefaultBuilder();
             webHostBuilder.UseDefaultServiceProvider(options => options.ValidateScopes = false);
