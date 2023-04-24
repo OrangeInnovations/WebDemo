@@ -44,9 +44,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Domain.Services", "Dem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Domain.Services.Test", "Demo.Domain.Services.Test\Demo.Domain.Services.Test.csproj", "{68695AEA-7397-467B-BE2A-0400014198B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionApp", "FunctionApp\FunctionApp.csproj", "{2C6D6A8E-5FC7-4BA4-A199-64FA06FF2D3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionApp", "FunctionApp\FunctionApp.csproj", "{2C6D6A8E-5FC7-4BA4-A199-64FA06FF2D3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionApp.Test", "FunctionApp.Test\FunctionApp.Test.csproj", "{F9B909C2-8A27-4CA3-A883-757B8F79107C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionApp.Test", "FunctionApp.Test\FunctionApp.Test.csproj", "{F9B909C2-8A27-4CA3-A883-757B8F79107C}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D51811F2-2927-46FF-AB41-1C6AA9882209}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGW", "ApiGW", "{C07B3714-ECF2-4702-BA7C-FC05A5F11EC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -168,6 +172,14 @@ Global
 		{F9B909C2-8A27-4CA3-A883-757B8F79107C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F9B909C2-8A27-4CA3-A883-757B8F79107C}.Release|x64.ActiveCfg = Release|Any CPU
 		{F9B909C2-8A27-4CA3-A883-757B8F79107C}.Release|x64.Build.0 = Release|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Debug|x64.Build.0 = Debug|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Release|x64.ActiveCfg = Release|Any CPU
+		{D51811F2-2927-46FF-AB41-1C6AA9882209}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
