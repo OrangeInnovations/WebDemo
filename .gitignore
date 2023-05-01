@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/WebApp/ctempinternal-nlog-AspNetCore.txt
