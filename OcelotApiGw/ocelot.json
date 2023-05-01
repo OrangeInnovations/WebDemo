@@ -1,18 +1,31 @@
 {
   "GlobalConfiguration": {
     "RequestIdKey": "OcRequestId",
-    "AdministrationPath": "/administration"
+    "AdministrationPath": "/administration",
+    "BaseUrl": "http://localhost:5004"
   },
   "Routes": [
     {
-      "UpstreamPathTemplate": "/gateway/students",
-      "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/student",
+      "UpstreamPathTemplate": "/gateway/WebApp/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "webapp",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/webapi/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "webapp",
+          "Port": 80
         }
       ]
     }

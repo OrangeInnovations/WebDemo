@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "sqldata": "StartWithoutDebugging",
+        "ocelotapigw": "StartDebugging",
+        "webapi": "StartDebugging",
+        "webapp": "StartDebugging"
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services.AddOcelot(builder.Configuration);
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 
 var app = builder.Build();
 

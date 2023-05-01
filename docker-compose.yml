@@ -1,15 +1,32 @@
 version: '3.4'
 
 services:
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+
   webapp:
     image: ${DOCKER_REGISTRY-}webapp
     build:
       context: .
       dockerfile: WebApp/Dockerfile
+    depends_on:
+      - sqldata
 
   webapi:
     image: ${DOCKER_REGISTRY-}webapi
     build:
       context: .
       dockerfile: WebApi/Dockerfile
+
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: OcelotApiGw/Dockerfile
+    depends_on:
+      - sqldata
+      - webapp
+      - webapi
+
 

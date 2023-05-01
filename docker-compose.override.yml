@@ -1,9 +1,20 @@
 version: '3.4'
 
 services:
+  
+  sqldata:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    volumes:
+      - eshop-sqldata:/var/opt/mssql
+
   webapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Server=sqldata;Initial Catalog=BlogDB;User Id=sa;Password=Pass@word
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "80"
@@ -11,6 +22,7 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
   webapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -21,3 +33,18 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+
+  ocelotapigw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+volumes:
+  eshop-sqldata:
+    external: false
